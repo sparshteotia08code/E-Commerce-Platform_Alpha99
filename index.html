@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Adda94 — India's Premium Store</title>
+<meta name="description" content="Adda94 - India's favourite premium multi-brand store. Shop fashion, electronics, accessories and more."/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="css/variables.css"/>
+<link rel="stylesheet" href="css/base.css"/>
+<link rel="stylesheet" href="css/navbar.css"/>
+<link rel="stylesheet" href="css/home.css"/>
+<link rel="stylesheet" href="css/pages.css"/>
+</head>
+<body>
+
+<div id="toastContainer"></div>
+
+<!-- ════════ NAVBAR ════════ -->
+<nav id="mainNav">
+  <div class="nav-announcement">
+    <p>🇮🇳 Free delivery on orders above ₹999 &nbsp;·&nbsp; <span>Use ADDA94 for 10% off</span> &nbsp;·&nbsp; Easy 30-day returns</p>
+  </div>
+  <div class="nav-main">
+    <a class="nav-logo" onclick="showPage('home')">
+      <span class="nav-logo-adda">Adda</span><span class="nav-logo-94">94</span>
+    </a>
+    <div class="nav-search">
+      <i class="fas fa-search search-icon"></i>
+      <input id="navSearchInput" type="text" placeholder="Search products, brands…" oninput="handleSearch(this.value)" autocomplete="off"/>
+      <div id="searchDropdown" class="search-results-dropdown"></div>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="showPage('wishlist')" title="Wishlist">
+        <i class="far fa-heart"></i><span>Wishlist</span>
+        <div class="nav-badge" id="wishlistBadge" style="display:none">0</div>
+      </button>
+      <button class="nav-btn" onclick="showPage('cart')" title="Bag">
+        <i class="fas fa-bag-shopping"></i><span>Bag</span>
+        <div class="nav-badge" id="cartBadge" style="display:none">0</div>
+      </button>
+      <button class="nav-btn" id="accountBtn" onclick="showPage('account')" title="Account">
+        <i class="far fa-user"></i><span>Login</span>
+      </button>
+      <button class="nav-btn nav-btn-cta" onclick="showPage('admin')" title="Admin">
+        <i class="fas fa-chart-line"></i><span>Admin</span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-cats">
+    <div class="nav-cat-item active" onclick="filterCategory('all',this)">All</div>
+    <div class="nav-cat-item" onclick="filterCategory('mens',this)">Men's Fashion</div>
+    <div class="nav-cat-item" onclick="filterCategory('womens',this)">Women's Fashion</div>
+    <div class="nav-cat-item" onclick="filterCategory('electronics',this)">Electronics</div>
+    <div class="nav-cat-item" onclick="filterCategory('accessories',this)">Accessories</div>
+    <div class="nav-cat-item" onclick="filterCategory('footwear',this)">Footwear</div>
+    <div class="nav-cat-item" onclick="filterCategory('beauty',this)">Beauty</div>
+    <div class="nav-cat-item" onclick="filterCategory('home',this)">Home & Living</div>
+    <div class="nav-cat-item" onclick="filterCategory('sports',this)">Sports</div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO - Coach style full screen with real background photo -->
+  <div class="hero-fullscreen" id="heroSection">
+    <div class="hero-slides">
+      <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=85')">
+        <div class="hero-slide-overlay"></div>
+        <div class="hero-slide-content">
+          <div class="hero-season-tag">New Season 2026</div>
+          <h1 class="hero-headline">For Every<br/><span class="hero-em">Style. Every Adda.</span></h1>
+          <p class="hero-tagline">Premium fashion, electronics & more — all at one place.</p>
+          <div class="hero-cta-row">
+            <button class="hero-btn-solid" onclick="filterCategory('womens',null);showPage('shop')">Shop Women's</button>
+            <button class="hero-btn-outline" onclick="filterCategory('mens',null);showPage('shop')">Shop Men's</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=85')">
+        <div class="hero-slide-overlay"></div>
+        <div class="hero-slide-content">
+          <div class="hero-season-tag">Electronics Sale</div>
+          <h1 class="hero-headline">Tech That<br/><span class="hero-em">Defines You.</span></h1>
+          <p class="hero-tagline">Upto 70% off on premium electronics & gadgets.</p>
+          <div class="hero-cta-row">
+            <button class="hero-btn-solid" onclick="filterCategory('electronics',null);showPage('shop')">Shop Electronics</button>
+            <button class="hero-btn-outline" onclick="showPage('shop')">View All Deals</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=85')">
+        <div class="hero-slide-overlay"></div>
+        <div class="hero-slide-content">
+          <div class="hero-season-tag">Festive Collection</div>
+          <h1 class="hero-headline">Celebrate in<br/><span class="hero-em">True Style.</span></h1>
+          <p class="hero-tagline">Ethnic wear, accessories & jewellery for every celebration.</p>
+          <div class="hero-cta-row">
+            <button class="hero-btn-solid" onclick="filterCategory('accessories',null);showPage('shop')">Shop Accessories</button>
+            <button class="hero-btn-outline" onclick="filterCategory('womens',null);showPage('shop')">Shop Ethnic</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Slide dots -->
+    <div class="hero-dots">
+      <div class="hero-dot active" onclick="goToSlide(0)"></div>
+      <div class="hero-dot" onclick="goToSlide(1)"></div>
+      <div class="hero-dot" onclick="goToSlide(2)"></div>
+    </div>
+    <!-- Slide arrows -->
+    <button class="hero-arrow hero-arrow-left" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+    <button class="hero-arrow hero-arrow-right" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+    <!-- Stats bar -->
+    <div class="hero-stats-bar">
+      <div class="hero-stat-item"><span class="hero-stat-num">116+</span><span class="hero-stat-lbl">Products</span></div>
+      <div class="hero-stat-sep"></div>
+      <div class="hero-stat-item"><span class="hero-stat-num">200+</span><span class="hero-stat-lbl">Brands</span></div>
+      <div class="hero-stat-sep"></div>
+      <div class="hero-stat-item"><span class="hero-stat-num">2M+</span><span class="hero-stat-lbl">Happy Customers</span></div>
+      <div class="hero-stat-sep"></div>
+      <div class="hero-stat-item"><span class="hero-stat-num">4.8 ★</span><span class="hero-stat-lbl">Avg Rating</span></div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <div class="marquee-item">FREE DELIVERY ON ₹999+<div class="marquee-dot"></div></div>
+      <div class="marquee-item">NEW SEASON ARRIVALS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">UPTO 70% OFF ON ELECTRONICS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">200+ PREMIUM BRANDS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">EASY 30-DAY RETURNS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">COD AVAILABLE NATIONWIDE<div class="marquee-dot"></div></div>
+      <div class="marquee-item">FREE DELIVERY ON ₹999+<div class="marquee-dot"></div></div>
+      <div class="marquee-item">NEW SEASON ARRIVALS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">UPTO 70% OFF ON ELECTRONICS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">200+ PREMIUM BRANDS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">EASY 30-DAY RETURNS<div class="marquee-dot"></div></div>
+      <div class="marquee-item">COD AVAILABLE NATIONWIDE<div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section style="padding:72px 5%">
+    <div class="section-header">
+      <div><div class="section-label-sm">Browse by</div><div class="section-title">Shop by Category</div></div>
+      <span class="section-link" onclick="showPage('shop')">View all <i class="fas fa-arrow-right"></i></span>
+    </div>
+    <div class="categories-grid">
+      <div class="cat-tile" onclick="filterCategory('mens',null);showPage('shop')">
+        <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=800&q=80" alt="Men's Fashion" class="cat-tile-photo"/>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info"><div class="cat-tile-name">Men's Fashion</div><div class="cat-tile-count">20 styles</div></div>
+      </div>
+      <div class="cat-tile" onclick="filterCategory('womens',null);showPage('shop')">
+        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80" alt="Women's Fashion" class="cat-tile-photo"/>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info"><div class="cat-tile-name">Women's Fashion</div><div class="cat-tile-count">20 styles</div></div>
+      </div>
+      <div class="cat-tile" onclick="filterCategory('electronics',null);showPage('shop')">
+        <img src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=800&q=80" alt="Electronics" class="cat-tile-photo"/>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info"><div class="cat-tile-name">Electronics</div><div class="cat-tile-count">20 products</div></div>
+      </div>
+      <div class="cat-tile" onclick="filterCategory('accessories',null);showPage('shop')">
+        <img src="https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?w=800&q=80" alt="Accessories" class="cat-tile-photo"/>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info"><div class="cat-tile-name">Accessories</div><div class="cat-tile-count">15 items</div></div>
+      </div>
+      <div class="cat-tile" onclick="filterCategory('footwear',null);showPage('shop')">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80" alt="Footwear" class="cat-tile-photo"/>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info"><div class="cat-tile-name">Footwear</div><div class="cat-tile-count">15 pairs</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING -->
+  <section style="background:var(--white);padding:72px 5%">
+    <div class="section-header">
+      <div><div class="section-label-sm">What's Hot</div><div class="section-title">Trending Now</div></div>
+      <span class="section-link" onclick="showPage('shop')">View all <i class="fas fa-arrow-right"></i></span>
+    </div>
+    <div class="products-grid" id="trendingGrid"></div>
+  </section>
+
+  <!-- FLASH SALE -->
+  <section style="padding:0 5% 72px">
+    <div class="flash-sale">
+      <div class="flash-left">
+        <div class="flash-tag"><i class="fas fa-bolt"></i>&nbsp;Flash Sale</div>
+        <div class="flash-title">Massive Deals<br/>Today Only</div>
+        <div class="flash-sub">Up to 70% off on selected items</div>
+        <div class="flash-timer">
+          <div class="timer-blk"><span class="timer-num" id="timerH">05</span><div class="timer-lbl">Hours</div></div>
+          <div class="timer-colon">:</div>
+          <div class="timer-blk"><span class="timer-num" id="timerM">42</span><div class="timer-lbl">Mins</div></div>
+          <div class="timer-colon">:</div>
+          <div class="timer-blk"><span class="timer-num" id="timerS">18</span><div class="timer-lbl">Secs</div></div>
+        </div>
+      </div>
+      <div class="flash-items">
+        <div class="flash-item" onclick="openProduct(76)" style="padding:0;overflow:hidden;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-lg)">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80" alt="Nike Air Max 270" style="width:100%;height:110px;object-fit:cover"/>
+          <div style="padding:12px">
+            <div class="flash-item-name">Nike Air Max 270</div>
+            <div class="flash-item-price">₹6,999</div>
+            <div class="flash-item-old">₹12,999</div>
+          </div>
+        </div>
+        <div class="flash-item" onclick="openProduct(41)" style="padding:0;overflow:hidden;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-lg)">
+          <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=300&q=80" alt="Sony WH-1000XM5" style="width:100%;height:110px;object-fit:cover"/>
+          <div style="padding:12px">
+            <div class="flash-item-name">Sony WH-1000XM5</div>
+            <div class="flash-item-price">₹24,999</div>
+            <div class="flash-item-old">₹34,990</div>
+          </div>
+        </div>
+        <div class="flash-item" onclick="openProduct(21)" style="padding:0;overflow:hidden;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-lg)">
+          <img src="https://images.unsplash.com/photo-1572804013427-4d7ca7268217?w=300&q=80" alt="Floral Wrap Dress" style="width:100%;height:110px;object-fit:cover"/>
+          <div style="padding:12px">
+            <div class="flash-item-name">Zara Floral Dress</div>
+            <div class="flash-item-price">₹2,999</div>
+            <div class="flash-item-old">₹5,990</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section style="padding:0 5% 72px">
+    <div class="section-header">
+      <div><div class="section-label-sm">Just Dropped</div><div class="section-title">New Arrivals</div></div>
+      <span class="section-link" onclick="showPage('shop')">View all <i class="fas fa-arrow-right"></i></span>
+    </div>
+    <div class="products-grid" id="newArrivalsGrid"></div>
+  </section>
+
+  <!-- PROMO BANNERS -->
+  <section style="padding:0 5% 72px">
+    <div class="banners-grid">
+      <div class="promo-banner promo-banner-photo" onclick="filterCategory('mens',null);showPage('shop')" style="position:relative;overflow:hidden;min-height:240px;border-radius:var(--radius-xl);cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=900&q=80" alt="Men's Formals" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease" class="banner-bg-img"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.2) 100%)"></div>
+        <div style="position:relative;z-index:2;padding:36px 32px;display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+          <div class="promo-cat" style="color:rgba(255,255,255,0.6)">New Collection</div>
+          <div class="promo-title" style="color:#fff">Men's Premium<br/>Formals</div>
+          <div class="promo-sub" style="color:rgba(255,255,255,0.7)">Suits, shirts & more from ₹1,299</div>
+          <button class="btn-primary" style="width:fit-content;margin-top:8px">Shop Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <div class="promo-banner promo-banner-photo" onclick="filterCategory('electronics',null);showPage('shop')" style="position:relative;overflow:hidden;min-height:240px;border-radius:var(--radius-xl);cursor:pointer">
+        <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=900&q=80" alt="Electronics" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease" class="banner-bg-img"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.2) 100%)"></div>
+        <div style="position:relative;z-index:2;padding:36px 32px;display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+          <div class="promo-cat" style="color:rgba(255,255,255,0.6)">Best Sellers</div>
+          <div class="promo-title" style="color:#fff">Electronics<br/>Under ₹9,999</div>
+          <div class="promo-sub" style="color:rgba(255,255,255,0.7)">Smartphones, earbuds & gadgets</div>
+          <button class="btn-primary" style="width:fit-content;margin-top:8px">Explore <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="background:var(--cream2);padding:72px 5%">
+    <div class="section-header">
+      <div><div class="section-label-sm">Happy Customers</div><div class="section-title">What People Say</div></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-text">"Adda94 is my go-to for everything! Got my sister a saree and myself a new phone — delivery was super fast and quality is excellent. Just like Myntra but even better!"</div>
+        <div class="t-author">
+          <div class="t-avatar" style="background:#FAECE7;color:#993C1D">PA</div>
+          <div><div class="t-name">Priya Agarwal</div><div class="t-loc">Mumbai, Maharashtra</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-text">"Ordered Sony headphones during the flash sale — 60% off! The website is so smooth and professional. Order tracking was real-time. 10/10 experience, will definitely order again!"</div>
+        <div class="t-author">
+          <div class="t-avatar" style="background:#E6F1FB;color:#185FA5">RK</div>
+          <div><div class="t-name">Rahul Kumar</div><div class="t-loc">Delhi, NCR</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <div class="t-text">"Found ethnic wear, sneakers and a smartwatch all in one place! The UI is gorgeous — feels like shopping on a luxury international website. Sab milega yahan — truly!"</div>
+        <div class="t-author">
+          <div class="t-avatar" style="background:#EAF3DE;color:#3B6D11">SB</div>
+          <div><div class="t-name">Sneha Bose</div><div class="t-loc">Kolkata, West Bengal</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES BAR -->
+  <div class="features-bar">
+    <div class="features-inner">
+      <div class="feature-item"><div class="feature-icon"><i class="fas fa-truck-fast"></i></div><div><div class="feature-title">Free Delivery</div><div class="feature-sub">On orders above ₹999</div></div></div>
+      <div class="feature-item"><div class="feature-icon"><i class="fas fa-rotate-left"></i></div><div><div class="feature-title">Easy Returns</div><div class="feature-sub">30-day hassle-free returns</div></div></div>
+      <div class="feature-item"><div class="feature-icon"><i class="fas fa-shield-halved"></i></div><div><div class="feature-title">Secure Payments</div><div class="feature-sub">100% safe & encrypted</div></div></div>
+      <div class="feature-item"><div class="feature-icon"><i class="fas fa-headset"></i></div><div><div class="feature-title">24/7 Support</div><div class="feature-sub">Always here to help you</div></div></div>
+    </div>
+  </div>
+
+  <!-- EDITORIAL STRIP - Coach style 3 panels with real photos -->
+  <div class="editorial-strip">
+    <div class="editorial-panel" onclick="filterCategory('beauty',null);showPage('shop')">
+      <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=85" alt="Beauty & Skincare" loading="lazy"/>
+      <div class="editorial-panel-overlay"></div>
+      <div class="editorial-panel-info">
+        <div class="editorial-panel-label">New Arrivals</div>
+        <div class="editorial-panel-title">Beauty &amp;<br/>Skincare</div>
+        <button class="editorial-panel-btn" onclick="event.stopPropagation();filterCategory('beauty',null);showPage('shop')">Shop Now</button>
+      </div>
+    </div>
+    <div class="editorial-panel" onclick="filterCategory('sports',null);showPage('shop')">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=85" alt="Sports & Fitness" loading="lazy"/>
+      <div class="editorial-panel-overlay"></div>
+      <div class="editorial-panel-info">
+        <div class="editorial-panel-label">Best Sellers</div>
+        <div class="editorial-panel-title">Sports &amp;<br/>Fitness</div>
+        <button class="editorial-panel-btn" onclick="event.stopPropagation();filterCategory('sports',null);showPage('shop')">Shop Now</button>
+      </div>
+    </div>
+    <div class="editorial-panel" onclick="filterCategory('home',null);showPage('shop')">
+      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=85" alt="Home & Living" loading="lazy"/>
+      <div class="editorial-panel-overlay"></div>
+      <div class="editorial-panel-info">
+        <div class="editorial-panel-label">Trending</div>
+        <div class="editorial-panel-title">Home &amp;<br/>Living</div>
+        <button class="editorial-panel-btn" onclick="event.stopPropagation();filterCategory('home',null);showPage('shop')">Shop Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <section style="padding:72px 5%">
+    <div class="newsletter-box">
+      <h2>Join the Adda94 Club</h2>
+      <p>Exclusive deals, early sale access and new arrivals — straight to your inbox.</p>
+      <div class="newsletter-form">
+        <input id="newsletterEmail" type="email" placeholder="Enter your email address"/>
+        <button onclick="subscribeNewsletter()">Subscribe</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-main">
+      <div>
+        <div class="footer-logo"><span class="footer-logo-adda">Adda</span><span class="footer-logo-94">94</span></div>
+        <div class="footer-desc">India's favourite premium multi-brand store. Fashion, electronics, accessories and more — all at your one adda. Trusted by 2 million+ shoppers across India.</div>
+        <div class="footer-socials">
+          <button class="social-btn" onclick="showToast('Follow us on Instagram!','info','fa-instagram')"><i class="fab fa-instagram"></i></button>
+          <button class="social-btn" onclick="showToast('Follow us on Facebook!','info','fa-facebook')"><i class="fab fa-facebook"></i></button>
+          <button class="social-btn" onclick="showToast('Follow us on X!','info','fa-x-twitter')"><i class="fab fa-x-twitter"></i></button>
+          <button class="social-btn" onclick="showToast('Subscribe on YouTube!','info','fa-youtube')"><i class="fab fa-youtube"></i></button>
+          <button class="social-btn" onclick="showToast('Follow on Pinterest!','info','fa-pinterest')"><i class="fab fa-pinterest"></i></button>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Shop</div>
+        <ul class="footer-links">
+          <li><a onclick="filterCategory('mens',null);showPage('shop')">Men's Fashion</a></li>
+          <li><a onclick="filterCategory('womens',null);showPage('shop')">Women's Fashion</a></li>
+          <li><a onclick="filterCategory('electronics',null);showPage('shop')">Electronics</a></li>
+          <li><a onclick="filterCategory('footwear',null);showPage('shop')">Footwear</a></li>
+          <li><a onclick="filterCategory('accessories',null);showPage('shop')">Accessories</a></li>
+          <li><a onclick="filterCategory('beauty',null);showPage('shop')">Beauty</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Help</div>
+        <ul class="footer-links">
+          <li><a onclick="showToast('Track your order in My Account','info','fa-box')">Track Your Order</a></li>
+          <li><a onclick="showToast('Returns accepted within 30 days','info','fa-rotate-left')">Returns & Exchanges</a></li>
+          <li><a onclick="showToast('Size guides available on each product','info','fa-ruler')">Size Guide</a></li>
+          <li><a onclick="showToast('Free shipping on orders above ₹999','info','fa-truck')">Shipping Policy</a></li>
+          <li><a onclick="showToast('We accept UPI, Cards, NetBanking & COD','info','fa-credit-card')">Payment Methods</a></li>
+          <li><a onclick="showToast('Support: support@adda94.in','info','fa-headset')">Contact Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a onclick="showToast('Founded in 2024, based in India','info','fa-building')">About Adda94</a></li>
+          <li><a onclick="showToast('Careers coming soon!','info','fa-briefcase')">Careers</a></li>
+          <li><a onclick="showToast('Press enquiries: press@adda94.in','info','fa-newspaper')">Press & Media</a></li>
+          <li><a onclick="showToast('Sell on Adda94 — coming soon!','info','fa-store')">Sell on Adda94</a></li>
+          <li><a onclick="showToast('Privacy Policy available soon','info','fa-lock')">Privacy Policy</a></li>
+          <li><a onclick="showToast('Terms of Service available soon','info','fa-file')">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Adda94. Made with ❤️ in India By MAHESH YADAV</p>
+      <div class="payment-methods">
+        <div class="pm-tag">UPI</div><div class="pm-tag">VISA</div>
+        <div class="pm-tag">MC</div><div class="pm-tag">AMEX</div>
+        <div class="pm-tag">COD</div><div class="pm-tag">EMI</div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════
+     SHOP PAGE
+════════════════════════════════════ -->
+<div class="page" id="page-shop">
+  <div class="shop-layout">
+    <div class="shop-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-title">Price Range</div>
+        <div class="price-range">
+          <input type="range" min="0" max="200000" value="200000" step="500" oninput="updatePriceFilter(this.value)"/>
+          <div class="price-range-vals"><span>₹0</span><span id="priceVal">₹2,00,000</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">Rating</div>
+        <div class="filter-options">
+          <label class="filter-opt"><input type="radio" name="rating" value="0" checked onchange="shopFilters.rating=0;renderShop()"> All ratings</label>
+          <label class="filter-opt"><input type="radio" name="rating" value="4" onchange="shopFilters.rating=4;renderShop()"> 4★ & above</label>
+          <label class="filter-opt"><input type="radio" name="rating" value="4.5" onchange="shopFilters.rating=4.5;renderShop()"> 4.5★ & above</label>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">Brands</div>
+        <div class="filter-options" id="brandFilters"></div>
+      </div>
+    </div>
+    <div class="shop-main">
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text3);margin-bottom:20px;flex-wrap:wrap">
+        <span style="cursor:pointer;transition:color 0.2s" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--text3)'" onclick="showPage('home')"><i class="fas fa-home"></i> Home</span>
+        <i class="fas fa-chevron-right" style="font-size:10px"></i>
+        <span id="shopBreadcrumb" style="color:var(--text1);font-weight:500">All Products</span>
+      </div>
+      <div class="shop-header">
+        <div>
+          <h2 id="shopCategoryLabel">All Products</h2>
+          <p id="shopProductCount">116 products found</p>
+        </div>
+        <div class="shop-sort">
+          <label>Sort by:</label>
+          <select onchange="updateSort(this.value)">
+            <option value="default">Relevance</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+            <option value="newest">Newest First</option>
+          </select>
+        </div>
+      </div>
+      <div class="products-grid" id="shopProductsGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     PRODUCT DETAIL PAGE
+════════════════════════════════════ -->
+<div class="page" id="page-product">
+  <div class="pd-page">
+    <div class="breadcrumb">
+      <span onclick="showPage('home')">Home</span>
+      <i class="fas fa-chevron-right"></i>
+      <span onclick="showPage('shop')" id="pdBreadcrumbCat">Category</span>
+      <i class="fas fa-chevron-right"></i>
+      <span id="pdBreadcrumbName">Product</span>
+    </div>
+    <div class="pd-grid">
+      <div class="pd-images">
+        <div class="pd-main-img"><span id="pdMainEmoji" style="font-size:130px">👗</span></div>
+        <div class="pd-thumbs" id="pdThumbs"></div>
+      </div>
+      <div class="pd-info">
+        <div class="pd-tags"><span class="pd-tag" id="pdBadge"></span></div>
+        <div class="pd-brand" id="pdBrand"></div>
+        <div class="pd-name" id="pdName"></div>
+        <div class="pd-rating-row">
+          <span class="stars" id="pdStars"></span>
+          <span class="pd-rating-num" id="pdRatingNum"></span>
+          <span class="pd-review-count" id="pdReviewCount" onclick="selectPdTab('reviews')"></span>
+        </div>
+        <div class="pd-price-row">
+          <span class="pd-price" id="pdPrice"></span>
+          <span class="pd-price-old" id="pdPriceOld"></span>
+          <div><span class="pd-savings" id="pdSavings"></span></div>
+        </div>
+        <div class="pd-section-lbl">Select Size</div>
+        <div class="pd-sizes" id="pdSizes"></div>
+        <div class="pd-section-lbl">Select Colour</div>
+        <div class="pd-colors" id="pdColors"></div>
+        <div class="pd-section-lbl">Quantity</div>
+        <div class="pd-qty-row">
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <div class="qty-val" id="pdQtyVal">1</div>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="pd-cta-row">
+          <button class="btn-primary" style="flex:1;padding:16px;font-size:16px;justify-content:center" onclick="pdAddToCart()">
+            <i class="fas fa-bag-shopping"></i> Add to Bag
+          </button>
+          <button class="btn-wish" id="pdWishBtn" onclick="pdToggleWishlist()">
+            <i class="far fa-heart"></i>
+          </button>
+        </div>
+        <button class="btn-secondary" style="width:100%;justify-content:center;margin-bottom:20px" onclick="pdAddToCart();showPage('cart')">
+          <i class="fas fa-bolt"></i> Buy Now
+        </button>
+        <div class="pd-delivery">
+          <div class="pd-delivery-row"><i class="fas fa-truck-fast"></i> Free delivery on orders above ₹999</div>
+          <div class="pd-delivery-row"><i class="fas fa-rotate-left"></i> 30-day easy returns & exchange</div>
+          <div class="pd-delivery-row"><i class="fas fa-shield-halved"></i> 100% authentic products guaranteed</div>
+          <div class="pd-pincode-row">
+            <input id="pincodeInput" type="text" placeholder="Enter pincode to check delivery" maxlength="6"/>
+            <button onclick="checkPincode()">Check</button>
+          </div>
+        </div>
+        <!-- TABS -->
+        <div class="pd-tabs">
+          <div class="pd-tab active" id="pdTab-description" onclick="selectPdTab('description')">Description</div>
+          <div class="pd-tab" id="pdTab-features" onclick="selectPdTab('features')">Features</div>
+          <div class="pd-tab" id="pdTab-reviews" onclick="selectPdTab('reviews')">Reviews</div>
+        </div>
+        <div class="pd-tab-panel" id="pdPanel-description"><div id="pdDescriptionContent"></div></div>
+        <div class="pd-tab-panel hidden" id="pdPanel-features">
+          <div id="pdDescriptionContent2"></div>
+        </div>
+        <div class="pd-tab-panel hidden" id="pdPanel-reviews"><div id="pdReviewsContent"></div></div>
+      </div>
+    </div>
+    <!-- SIMILAR PRODUCTS -->
+    <div style="margin-top:72px">
+      <div class="section-header">
+        <div><div class="section-label-sm">You May Also Like</div><div class="section-title">Similar Products</div></div>
+      </div>
+      <div class="products-grid" id="pdSimilarGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     CART PAGE
+════════════════════════════════════ -->
+<div class="page" id="page-cart">
+  <div class="cart-page">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text3);margin-bottom:16px">
+      <span style="cursor:pointer" onclick="showPage('home')" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--text3)'"><i class="fas fa-home"></i> Home</span>
+      <i class="fas fa-chevron-right" style="font-size:10px"></i>
+      <span style="color:var(--text1);font-weight:500">My Bag</span>
+    </div>
+    <div class="cart-page-title">My Bag</div>
+    <div class="cart-subtitle" id="cartSubtitle">0 items</div>
+    <div class="empty-state" id="cartEmpty">
+      <div class="empty-icon">🛍️</div>
+      <h3>Your bag is empty</h3>
+      <p>Looks like you haven't added anything yet</p>
+      <button class="btn-primary" onclick="showPage('shop')"><i class="fas fa-bag-shopping"></i> Start Shopping</button>
+    </div>
+    <div class="cart-layout" id="cartLayout" style="display:none">
+      <div class="cart-items-list" id="cartItemsList"></div>
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">₹0</span></div>
+        <div class="summary-row"><span>Delivery</span><span id="summaryDelivery">₹0</span></div>
+        <div class="summary-row"><span>Coupon Discount</span><span id="summaryDiscount">—</span></div>
+        <div class="summary-row total"><span>Total</span><span id="summaryTotal">₹0</span></div>
+        <div class="coupon-row">
+          <input id="couponInput" type="text" placeholder="Enter coupon code"/>
+          <button onclick="handleCoupon()">Apply</button>
+        </div>
+        <div class="savings-notice" id="summarySavings"><i class="fas fa-tag"></i> Add items to see savings</div>
+        <button class="btn-checkout" onclick="goToCheckout()"><i class="fas fa-lock"></i> Proceed to Checkout</button>
+        <button class="btn-continue-shop" onclick="showPage('shop')">← Continue Shopping</button>
+        <div class="secure-note"><i class="fas fa-shield-halved" style="color:var(--green)"></i> 100% Secure &amp; Encrypted</div>
+        <div style="margin-top:14px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+          <span style="font-size:11px;color:var(--text3)">Coupon codes: ADDA94 · SAVE20 · WELCOME15</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     CHECKOUT PAGE
+════════════════════════════════════ -->
+<div class="page" id="page-checkout">
+  <div class="checkout-page">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text3);margin-bottom:16px">
+      <span style="cursor:pointer" onclick="showPage('home')" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--text3)'"><i class="fas fa-home"></i> Home</span>
+      <i class="fas fa-chevron-right" style="font-size:10px"></i>
+      <span style="cursor:pointer" onclick="showPage('cart')" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--text3)'">My Bag</span>
+      <i class="fas fa-chevron-right" style="font-size:10px"></i>
+      <span style="color:var(--text1);font-weight:500">Checkout</span>
+    </div>
+    <div class="checkout-page-title">Checkout</div>
+    <div class="checkout-steps">
+      <div class="ck-step"><div class="ck-circle done"><i class="fas fa-check"></i></div><div class="ck-label">Bag</div></div>
+      <div class="ck-line"></div>
+      <div class="ck-step"><div class="ck-circle active">2</div><div class="ck-label active">Address</div></div>
+      <div class="ck-line"></div>
+      <div class="ck-step"><div class="ck-circle active">3</div><div class="ck-label active">Payment</div></div>
+      <div class="ck-line"></div>
+      <div class="ck-step"><div class="ck-circle idle">4</div><div class="ck-label">Confirm</div></div>
+    </div>
+    <div class="checkout-layout">
+      <div class="checkout-sections">
+        <!-- Address -->
+        <div class="ck-section">
+          <div class="ck-section-title"><i class="fas fa-location-dot"></i> Delivery Address</div>
+          <div class="form-grid2">
+            <div class="form-field"><label>Full Name *</label><input type="text" id="ckName" placeholder="Rahul Kumar"/></div>
+            <div class="form-field"><label>Phone *</label><input type="tel" id="ckPhone" placeholder="9876543210" maxlength="10"/></div>
+            <div class="form-field full"><label>Address *</label><input type="text" id="ckAddress" placeholder="House/Flat no., Building, Street name"/></div>
+            <div class="form-field"><label>City *</label><input type="text" id="ckCity" placeholder="Mumbai"/></div>
+            <div class="form-field"><label>State</label>
+              <select id="ckState">
+                <option>Maharashtra</option><option>Delhi</option><option>Karnataka</option>
+                <option>Tamil Nadu</option><option>West Bengal</option><option>Gujarat</option>
+                <option>Rajasthan</option><option>Uttar Pradesh</option><option>Punjab</option><option>Kerala</option>
+              </select>
+            </div>
+            <div class="form-field"><label>Pincode *</label><input type="text" id="ckPincode" placeholder="400001" maxlength="6"/></div>
+          </div>
+        </div>
+        <!-- Payment -->
+        <div class="ck-section">
+          <div class="ck-section-title"><i class="fas fa-credit-card"></i> Payment Method</div>
+          <div class="payment-opts">
+            <div class="payment-opt selected" id="pm-upi" onclick="selectPayment('upi')">
+              <input type="radio" name="payment" checked/>
+              <div class="pm-icon-box">📲</div>
+              <div class="pm-text"><div class="pm-name">UPI Payment</div><div class="pm-desc">Google Pay, PhonePe, Paytm, BHIM</div></div>
+              <div class="pm-tags"><span class="pm-tag-sm">GPay</span><span class="pm-tag-sm">PhonePe</span><span class="pm-tag-sm">Paytm</span></div>
+            </div>
+            <div class="pm-sub-fields show" id="pm-fields-upi">
+              <div class="form-field"><label>UPI ID</label><input type="text" placeholder="yourname@upi" /></div>
+            </div>
+
+            <div class="payment-opt" id="pm-card" onclick="selectPayment('card')">
+              <input type="radio" name="payment"/>
+              <div class="pm-icon-box">💳</div>
+              <div class="pm-text"><div class="pm-name">Credit / Debit Card</div><div class="pm-desc">Visa, Mastercard, RuPay, Amex</div></div>
+              <div class="pm-tags"><span class="pm-tag-sm">VISA</span><span class="pm-tag-sm">MC</span><span class="pm-tag-sm">RuPay</span></div>
+            </div>
+            <div class="pm-sub-fields" id="pm-fields-card">
+              <div class="form-field"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19"/></div>
+              <div class="form-grid2">
+                <div class="form-field"><label>Expiry</label><input type="text" placeholder="MM/YY" maxlength="5"/></div>
+                <div class="form-field"><label>CVV</label><input type="password" placeholder="•••" maxlength="3"/></div>
+              </div>
+            </div>
+
+            <div class="payment-opt" id="pm-netbanking" onclick="selectPayment('netbanking')">
+              <input type="radio" name="payment"/>
+              <div class="pm-icon-box">🏦</div>
+              <div class="pm-text"><div class="pm-name">Net Banking</div><div class="pm-desc">All major Indian banks supported</div></div>
+            </div>
+            <div class="pm-sub-fields" id="pm-fields-netbanking">
+              <div class="form-field"><label>Select Bank</label>
+                <select><option>SBI</option><option>HDFC Bank</option><option>ICICI Bank</option><option>Axis Bank</option><option>Kotak Bank</option><option>PNB</option><option>Bank of Baroda</option></select>
+              </div>
+            </div>
+
+            <div class="payment-opt" id="pm-emi" onclick="selectPayment('emi')">
+              <input type="radio" name="payment"/>
+              <div class="pm-icon-box">📅</div>
+              <div class="pm-text"><div class="pm-name">EMI</div><div class="pm-desc">No-cost EMI on eligible cards</div></div>
+              <div class="pm-tags"><span class="pm-tag-sm">0% Interest</span></div>
+            </div>
+            <div class="pm-sub-fields" id="pm-fields-emi">
+              <div class="form-field"><label>EMI Duration</label>
+                <select><option>3 months (No-cost EMI)</option><option>6 months (No-cost EMI)</option><option>9 months</option><option>12 months</option></select>
+              </div>
+            </div>
+
+            <div class="payment-opt" id="pm-cod" onclick="selectPayment('cod')">
+              <input type="radio" name="payment"/>
+              <div class="pm-icon-box">💵</div>
+              <div class="pm-text"><div class="pm-name">Cash on Delivery</div><div class="pm-desc">Pay when your order arrives</div></div>
+            </div>
+            <div class="pm-sub-fields" id="pm-fields-cod">
+              <div style="background:var(--green-light);color:var(--green);border-radius:var(--radius-md);padding:12px 16px;font-size:13px"><i class="fas fa-circle-check"></i> COD available for this order. Keep exact change ready.</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-full" id="placeOrderBtn" onclick="placeOrderNow()">
+          <i class="fas fa-lock"></i> Place Order Securely
+        </button>
+        <div style="text-align:center;margin-top:12px;font-size:12px;color:var(--text3)">
+          <i class="fas fa-shield-halved" style="color:var(--green)"></i> Your payment info is 100% secure & encrypted
+        </div>
+      </div>
+
+      <!-- Order Box -->
+      <div class="checkout-order-box">
+        <h3>Your Order</h3>
+        <div id="checkoutOrderItems"></div>
+        <div style="border-top:1px solid var(--cream3);padding-top:16px;margin-top:4px">
+          <div class="summary-row"><span>Subtotal</span><span id="ckSubtotal"></span></div>
+          <div class="summary-row"><span>Delivery</span><span id="ckDelivery"></span></div>
+          <div class="summary-row" style="font-size:17px;font-weight:700;color:var(--text1)"><span>Total</span><span id="ckTotal"></span></div>
+        </div>
+        <div style="background:var(--green-light);color:var(--green);border-radius:var(--radius-md);padding:10px 14px;font-size:12px;margin-top:16px"><i class="fas fa-tag"></i> Apply coupon in cart to save more!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     ORDER SUCCESS PAGE
+════════════════════════════════════ -->
+<div class="page" id="page-success">
+  <div class="success-page">
+    <div class="success-inner">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Order Placed!</div>
+      <div class="success-sub">Thank you for shopping at Adda94! Your order has been confirmed and is being processed. You'll receive updates at every step.</div>
+      <div class="order-id-box">
+        <div class="order-id-lbl">Order ID</div>
+        <div class="order-id-val" id="successOrderId">ADR94000000</div>
+      </div>
+      <div class="tracking-card">
+        <h3>📦 Order Tracking</h3>
+        <div class="track-step track-step-item">
+          <div class="track-icon done"><i class="fas fa-check"></i></div>
+          <div class="track-body"><div class="track-title">Order Confirmed</div><div class="track-time">Just now</div></div>
+        </div>
+        <div class="track-step track-step-item">
+          <div class="track-icon active"><i class="fas fa-box"></i></div>
+          <div class="track-body"><div class="track-title">Order Processing</div><div class="track-time">Estimated: Today</div></div>
+        </div>
+        <div class="track-step track-step-item">
+          <div class="track-icon idle"><i class="fas fa-truck"></i></div>
+          <div class="track-body"><div class="track-title">Shipped</div><div class="track-time">Estimated: Tomorrow</div></div>
+        </div>
+        <div class="track-step track-step-item">
+          <div class="track-icon idle"><i class="fas fa-truck-fast"></i></div>
+          <div class="track-body"><div class="track-title">Out for Delivery</div><div class="track-time">Estimated: In 2-3 days</div></div>
+        </div>
+        <div class="track-step track-step-item">
+          <div class="track-icon idle"><i class="fas fa-house"></i></div>
+          <div class="track-body"><div class="track-title">Delivered</div><div class="track-time">Estimated: In 3-5 days</div></div>
+        </div>
+      </div>
+      <div class="success-btns">
+        <button class="btn-primary" onclick="showPage('account')"><i class="fas fa-box"></i> View My Orders</button>
+        <button class="btn-secondary" onclick="showPage('shop')"><i class="fas fa-bag-shopping"></i> Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     WISHLIST PAGE
+════════════════════════════════════ -->
+<div class="page" id="page-wishlist">
+  <div class="wishlist-page">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text3);margin-bottom:20px">
+      <span style="cursor:pointer" onclick="showPage('home')" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--text3)'"><i class="fas fa-home"></i> Home</span>
+      <i class="fas fa-chevron-right" style="font-size:10px"></i>
+      <span style="color:var(--text1);font-weight:500">My Wishlist</span>
+    </div>
+    <div class="page-head">
+      <h1>My Wishlist</h1>
+      <p id="wishlistCount" class="page-head p">0 items saved</p>
+    </div>
+    <div class="empty-state" id="wishlistEmpty">
+      <div class="empty-icon">❤️</div>
+      <h3>Your wishlist is empty</h3>
+      <p>Save items you love by clicking the heart icon</p>
+      <button class="btn-primary" onclick="showPage('shop')"><i class="fas fa-heart"></i> Start Wishlisting</button>
+    </div>
+    <div class="products-grid" id="wishlistGrid" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     ACCOUNT PAGE (dynamic)
+════════════════════════════════════ -->
+<div class="page" id="page-account"></div>
+
+<!-- ════════════════════════════════════
+     ADMIN DASHBOARD
+════════════════════════════════════ -->
+<div class="page" id="page-admin">
+  <div class="admin-page">
+    <div class="admin-header">
+      <div class="admin-title">Admin Dashboard</div>
+      <div class="admin-role-badge">Admin Panel</div>
+    </div>
+    <div class="admin-tabs">
+      <div class="admin-tab active" id="adminTab-overview" onclick="switchAdminTab('overview')">Overview</div>
+      <div class="admin-tab" id="adminTab-orders" onclick="switchAdminTab('orders')">Orders</div>
+      <div class="admin-tab" id="adminTab-products" onclick="switchAdminTab('products')">Products</div>
+    </div>
+
+    <!-- OVERVIEW PANEL -->
+    <div class="admin-panel active" id="adminPanel-overview">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--orange-light);color:var(--orange)"><i class="fas fa-indian-rupee-sign"></i></div>
+          <div class="stat-val" id="statRevenue">₹28,47,500</div>
+          <div class="stat-lbl">Total Revenue</div>
+          <div class="stat-chg up"><i class="fas fa-arrow-up"></i> +18.5% this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--blue-light);color:var(--blue)"><i class="fas fa-bag-shopping"></i></div>
+          <div class="stat-val" id="statOrders">1,247</div>
+          <div class="stat-lbl">Total Orders</div>
+          <div class="stat-chg up"><i class="fas fa-arrow-up"></i> +12.3% this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--green-light);color:var(--green)"><i class="fas fa-users"></i></div>
+          <div class="stat-val" id="statCustomers">8,432</div>
+          <div class="stat-lbl">Total Customers</div>
+          <div class="stat-chg up"><i class="fas fa-arrow-up"></i> +9.8% this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--gold-light);color:var(--gold)"><i class="fas fa-box-open"></i></div>
+          <div class="stat-val" id="statProducts">34</div>
+          <div class="stat-lbl">Products Listed</div>
+          <div class="stat-chg up"><i class="fas fa-arrow-up"></i> +4 new this week</div>
+        </div>
+      </div>
+      <div class="admin-grid2">
+        <div class="admin-card">
+          <div class="admin-card-title">Monthly Sales <span onclick="showToast('Full analytics coming soon','info','fa-chart-line')">View Full Report →</span></div>
+          <div id="salesChart"></div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Top Products</div>
+          <div id="topProductsList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS PANEL -->
+    <div class="admin-panel" id="adminPanel-orders">
+      <div class="admin-card">
+        <div class="admin-card-title">Recent Orders</div>
+        <table class="orders-table">
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody id="ordersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRODUCTS PANEL -->
+    <div class="admin-panel" id="adminPanel-products">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:16px;font-weight:700" id="adminProductsTitle">All Products</div>
+        <button class="btn-primary" onclick="showToast('Add Product feature coming soon!','info','fa-plus')"><i class="fas fa-plus"></i> Add Product</button>
+      </div>
+      <div class="admin-products-grid" id="adminProductsGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/home.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/product.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/admin.js"></script>
+<script>
+// BOOT
+document.addEventListener('DOMContentLoaded', ()=>{
+  initBadges();
+  renderHome();
+  initHeroSlider();
+});
+</script>
+</body>
+</html>

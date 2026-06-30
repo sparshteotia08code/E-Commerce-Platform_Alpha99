@@ -1,0 +1,279 @@
+openapi: 3.0.0
+info:
+  title: E-Commerce-Platform_Alpha99 API
+  description: RESTful API for E-Commerce-Platform_Alpha99, supporting user auth, product catalogs, shopping carts, checkout, reviews, and admin dashboard operations.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: Development Server
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                  example: Jane Doe
+                email:
+                  type: string
+                  format: email
+                  example: jane@example.com
+                password:
+                  type: string
+                  format: password
+                  example: securepassword123
+      responses:
+        201:
+          description: User registered successfully.
+        400:
+          description: User already exists or validation failed.
+
+  /auth/login:
+    post:
+      summary: Authenticate a user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: admin@alpha99.com
+                password:
+                  type: string
+                  format: password
+                  example: admin123
+      responses:
+        200:
+          description: Successful authentication, returns JWT token.
+        401:
+          description: Invalid email or password.
+
+  /auth/profile:
+    get:
+      summary: Get current authenticated user profile
+      tags:
+        - Authentication
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Profile retrieved successfully.
+        401:
+          description: Unauthorized.
+
+  /products:
+    get:
+      summary: Retrieve all products with pagination, search, and filters
+      tags:
+        - Products
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+          description: Filter products by category
+        - name: brand
+          in: query
+          schema:
+            type: string
+          description: Filter products by brand
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Search products by name, brand, or description
+        - name: minPrice
+          in: query
+          schema:
+            type: integer
+          description: Minimum price filter
+        - name: maxPrice
+          in: query
+          schema:
+            type: integer
+          description: Maximum price filter
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [default, price-asc, price-desc, rating, newest]
+          description: Sorting mode
+      responses:
+        200:
+          description: List of products.
+
+  /products/{id}:
+    get:
+      summary: Get details of a single product
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Product details.
+        404:
+          description: Product not found.
+
+  /products/{id}/reviews:
+    post:
+      summary: Add a product review
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - rating
+                - comment
+              properties:
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  example: 5
+                comment:
+                  type: string
+                  example: This product exceeded my expectations!
+                title:
+                  type: string
+                  example: High quality
+      responses:
+        201:
+          description: Review created.
+        401:
+          description: Unauthorized.
+
+  /cart:
+    get:
+      summary: Get cart items for the authenticated user
+      tags:
+        - Cart
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of cart items.
+    post:
+      summary: Add item to cart
+      tags:
+        - Cart
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productId
+                - quantity
+              properties:
+                productId:
+                  type: integer
+                  example: 1
+                quantity:
+                  type: integer
+                  example: 1
+                selectedColor:
+                  type: string
+                  example: '#FFFFFF'
+                selectedSize:
+                  type: string
+                  example: 'M'
+      responses:
+        200:
+          description: Cart item added or updated.
+
+  /orders:
+    post:
+      summary: Place an order
+      tags:
+        - Orders
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - address
+                - paymentMethod
+              properties:
+                address:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                      example: Jane Doe
+                    phone:
+                      type: string
+                      example: '9876543210'
+                    addressLine:
+                      type: string
+                      example: 123 Main St
+                    city:
+                      type: string
+                      example: Mumbai
+                    state:
+                      type: string
+                      example: Maharashtra
+                    pincode:
+                      type: string
+                      example: '400001'
+                paymentMethod:
+                  type: string
+                  enum: [upi, card, netbanking, emi, cod]
+                  example: cod
+                couponCode:
+                  type: string
+                  example: ALPHA99
+      responses:
+        201:
+          description: Order placed successfully.
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
